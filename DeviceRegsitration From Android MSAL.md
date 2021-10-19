@@ -1,4 +1,4 @@
-#How to trigger device registration from android app via MSAL library.
+# How to trigger device registration from android app via MSAL library.
 
 In order to achieve SSO with work account between both 1st and 3rd party apps, Workplace join is required. That means, device must be registered with Azure AD.
 
