@@ -37,4 +37,9 @@ If the device is not registered in the Azure AD, then it should launch below pop
  
 ![image](https://user-images.githubusercontent.com/62542910/137879022-2f762177-f8e7-4980-910b-a97d47a7aa10.png)
 
+## Note : 
+
+1.	Currently, signIn method of [SingleAccountPublicClientApplication]( https://github.com/AzureAD/microsoft-authentication-library-for-android/blob/7d912a44870301f0d8aa6a7627e747c4a1825879/msal/src/main/java/com/microsoft/identity/client/SingleAccountPublicClientApplication.java#L581) class doesn’t expose any overload methods to pass AcquireTokenParameters. It has to be done while requesting the token.
+2.	You could implement the similar approach in [AcquireTokenSilent]( https://github.com/AzureAD/microsoft-authentication-library-for-android/blob/7d912a44870301f0d8aa6a7627e747c4a1825879/msal/src/main/java/com/microsoft/identity/client/SingleAccountPublicClientApplication.java#L665) by passing the object of [AcquireTokenSilentParameters]( https://github.com/AzureAD/microsoft-authentication-library-for-android/blob/7d912a44870301f0d8aa6a7627e747c4a1825879/msal/src/main/java/com/microsoft/identity/client/AcquireTokenSilentParameters.java#L25)
+3.	If you are using the [MultipleAccountPublicClientApplication]( https://github.com/AzureAD/microsoft-authentication-library-for-android/blob/7d912a44870301f0d8aa6a7627e747c4a1825879/msal/src/main/java/com/microsoft/identity/client/MultipleAccountPublicClientApplication.java), then this flow cannot be triggered. 
 
