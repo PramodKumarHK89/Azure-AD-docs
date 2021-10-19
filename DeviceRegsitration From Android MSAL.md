@@ -4,11 +4,11 @@ In order to achieve SSO with work account between both 1st and 3rd party apps, [
 
 The simplest way to register the device in android device is through either Authenticator app or Company portal app. However, there might a scenario where you want to trigger the device registration process from your android app using the MSAL library. You could follow the below instructions to achieve it. 
 
-Declare a variable of type AcquireTokenParameters class 
+Declare a variable of type [AcquireTokenParameters](https://github.com/AzureAD/microsoft-authentication-library-for-android/blob/dev/msal/src/main/java/com/microsoft/identity/client/AcquireTokenParameters.java) class 
 
 	private AcquireTokenParameters mParameters;
 
-Create an object of ClaimsRequest & RequestedClaimAdditionaInformation classes and use the below code to setup the ClaimsRequest object to request for “deviceid” claim. This object is used as a parameter later acquiring the token. 
+Create an object of [ClaimsRequest](https://github.com/AzureAD/microsoft-authentication-library-for-android/blob/bc3d3012d6c0f311cbfec9c0bb08e00eabacac3f/msal/src/main/java/com/microsoft/identity/client/claims/ClaimsRequest.java#L38) & [RequestedClaimAdditionaInformation](https://github.com/AzureAD/microsoft-authentication-library-for-android/blob/bc3d3012d6c0f311cbfec9c0bb08e00eabacac3f/msal/src/main/java/com/microsoft/identity/client/claims/RequestedClaimAdditionalInformation.java#L35) classes and use the below code to setup the ClaimsRequest object to request for “deviceid” claim. This object is used as a parameter later acquiring the token. 
 
 	ClaimsRequest deviceIdClaimsRequest = new ClaimsRequest();
 	RequestedClaimAdditionalInformation deviceIdAdditionalInfo =
@@ -28,7 +28,7 @@ Now build the AcquireTokenParameters object using the builder pattern as below. 
 		.withCallback(getAuthInteractiveCallback())
 		.build();
 
-Now pass the AcquireTokenParameters object to AcquireToken method of SingleAccountPublicClientApplication class. 
+Now pass the AcquireTokenParameters object to [AcquireToken](https://github.com/AzureAD/microsoft-authentication-library-for-android/blob/7d912a44870301f0d8aa6a7627e747c4a1825879/msal/src/main/java/com/microsoft/identity/client/SingleAccountPublicClientApplication.java#L581) method of [SingleAccountPublicClientApplication](https://github.com/AzureAD/microsoft-authentication-library-for-android/blob/7d912a44870301f0d8aa6a7627e747c4a1825879/msal/src/main/java/com/microsoft/identity/client/SingleAccountPublicClientApplication.java#L581) class. 
 
 	     mSingleAccountApp.acquireToken(mParameters);
 
