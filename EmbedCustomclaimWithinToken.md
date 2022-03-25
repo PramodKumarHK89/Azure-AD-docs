@@ -146,7 +146,7 @@ If an application needs to send claims with data from an extension attribute reg
 
 
 ## References 
-https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-schema-extensions
-https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-claims-mapping
-https://winsmarts.com/using-token-configuration-to-include-arbitrary-claims-in-id-token-or-access-token-or-samltoken-26f75ee13bf0
+- https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-schema-extensions
+- https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-claims-mapping
+- https://winsmarts.com/using-token-configuration-to-include-arbitrary-claims-in-id-token-or-access-token-or-samltoken-26f75ee13bf0
 
