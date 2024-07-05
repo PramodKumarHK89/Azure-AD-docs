@@ -48,8 +48,8 @@ Now, comparing this requirement to the Example Scenario 1 with Outlook Client, t
 This scenario is a variation of Example Scenario 2, where the **CustomClient** app does not have a dependency on **CustomService**, or **CustomService** isn’t protected by Entra ID. As you can imagine, you cannot define the Conditional Access Policy since the **CustomClient** app will not be available while defining the policy under the target resource, as it is a public client app registration. So, the question is, how do you enforce the Conditional Access Policy?
 
 A workaround here is to introduce a new dependency on a dummy service and configure the app to request a token for this service. Here’s how you can implement it:
-1.	Create API App Registration: Register a dummy API in Entra AD and expose a scope. This dummy service will act as the target resource for the Conditional Access Policy.
-2.	Add/Grant Permissions: In the **CustomClient** app registration, add permissions to the exposed scope of the dummy API. Even though there is no actual API implementation
+- Create API App Registration: Register a dummy API in Entra AD and expose a scope. This dummy service will act as the target resource for the Conditional Access Policy.
+- Add/Grant Permissions: In the **CustomClient** app registration, add permissions to the exposed scope of the dummy API. Even though there is no actual API implementation
 
 From code perspective, the **CustomClient** app will request a token for this dummy service during the sign-in, which ensures that the Conditional Access Policy is evaluated against the target resource **CustomService** and hence policy will be enforced. This approach leverages the underlying requirement of Conditional Access Policies to be tied to a resource, thereby indirectly protecting the **CustomClient** app.
 
