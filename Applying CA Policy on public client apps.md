@@ -4,11 +4,11 @@
 
 Accessing enterprise apps from mobile devices has become the new norm. Many organizations now allow employees to access corporate apps through their personal mobile devices. This boosts productivity and provides flexibility for employees to do their jobs seamlessly. However, at the same time, it's crucial to protect these apps to prevent any security breaches and protect organization data.
 
-Organizations commonly use the Intune MDM suite to protect devices as a whole. Devices managed through Intune MDM solutions are termed managed devices, while those not managed by any solution are called unmanaged devices. Most organizations prefer managed devices, but unmanaged devices scenario also exist where usage MDM management on a personal device is not desired for various reasons. Nevertheless, in both cases, it's essential to protect corporate apps and enforce security measures if you are letting the users/apps to access Corp data.
+Organizations commonly use the [Intune MDM suite](https://learn.microsoft.com/en-us/mem/intune/fundamentals/manage-devices) to protect devices as a whole. Devices managed through Intune MDM solutions are termed managed devices, while those not managed by any solution are called unmanaged devices. Most organizations prefer managed devices, but unmanaged devices scenario also exist where usage MDM management on a personal device is not desired for various reasons. Nevertheless, in both cases, it's essential to protect corporate apps and enforce security measures if you are letting the users/apps to access Corp data.
 
-To protect apps running on both managed and unmanaged mobile devices, app protection policies[MAM] are typically used in combination with the Entra ID Conditional Access Policy feature. For example, for managed devices, you may apply a policy that allows sign-ins only from compliant devices. For unmanaged devices, you may apply a policy that ensures app protection policies are applied during the sign-in and block if it is not in place. 
+To protect apps running on both managed and unmanaged mobile devices, [app protection policies](https://learn.microsoft.com/en-us/mem/intune/apps/app-management)[MAM] are typically used in combination with the Entra ID Conditional Access Policy feature. For example, for managed devices, you may apply a policy that allows sign-ins only from compliant devices. For unmanaged devices, you may apply a policy that ensures app protection policies are applied during the sign-in and block if it is not in place. 
 
-These are a couple of commonly used examples, but there are multiple other scenarios. You can explore more on conditional access policy feature at https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-conditional-access-policies
+These are a couple of commonly used examples, but there are multiple other scenarios. You can explore more on conditional access policy feature [here](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-conditional-access-policies) 
 
 This article sheds light on how an admin can enhance security of native mobile apps through the Conditional Access Policy feature of Entra ID. 
 
@@ -56,7 +56,12 @@ From code perspective, the **CustomClient** app will request a token for this du
 
 ## Anti-pattern Alert: Conditional Access Policies in case of All Cloud Apps
 
-Applying Conditional Access Policies to all cloud apps may seem comprehensive, but it will still not enforce the conditional access policy on the client apps which lacks dependencies on protected resources or services under Entra ID. In such scenarios, there is a common anti-pattern arises since cli ent apps unnecessarily request high-privileged scopes for the graph resources , as scope requests to graph like User.Read are excluded during policy evaluation. You can find more details here <LIMK>.
+Applying Conditional Access Policies to all cloud apps may seem comprehensive, but it will still not enforce the conditional access policy on the client apps which lacks dependencies on protected resources or services under Entra ID. In such scenarios, there is a common anti-pattern arises since cli ent apps unnecessarily request high-privileged scopes for the graph resources , as scope requests to graph like User.Read are excluded during policy evaluation. You can find more details [here](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-conditional-access-cloud-apps#all-cloud-apps) .
 
 This approach is not recommended. A better choice, as illustrated in Example Scenario 3, involves using a dummy service. This approach ensures that tokens issued to the dummy service cannot be exploited by malicious actors or the app itself since there is no actual API implementation and hence the token is useless.
 
+## Conclusion
+
+- Conditional Access Policy is not set directly on a client (public/native) application.
+- Conditional Access Policy is designed to protect the service, meaning it is applied when a client calls a service.
+- If there is no dependency on a service in the client app, introduce a service dependency for the app and apply the policy to that service.
