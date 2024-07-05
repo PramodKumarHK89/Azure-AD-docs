@@ -33,25 +33,26 @@ For more details, refer to Cloud apps, actions, and authentication context in Co
 
 Many admins/developers often misinterpret the above design as a limitation of Conditional Access Policy, complaining that it cannot apply the CA policy to a public client. In reality, there is no need to enforce the Conditional Access Policy on the client apps as client apps will always need some service in backend to provide the corp data which can be protected through the conditional access policy. If you want to protect specifically the client apps, then app protection policy is the right choice.
 
-## Example Scenario 2: Blocking Sign-In for Custom Client App from Non-Compliant Devices
+## Example Scenario 2: Blocking Sign-In for **CustomClient** App from Non-Compliant Devices
 
-Let us assume that an organization has a mobile app called CustomClient, which is an HR-related app for their employees, and this app relies on the HR service CustomService that exposes corporate data through an API. As an IT admin, you want to ensure that this app is accessed only through compliant devices. In other words, although the app is available through Google Play or the Apple App Store, it must be accessed from an MDM-enrolled or managed device.
+et us assume that an organization has a mobile app called **CustomClient**, which is an HR-related app for their employees, and this app relies on the HR service **CustomService** that exposes corporate data through an API. As an IT admin, you want to ensure that this app is accessed only through compliant devices. In other words, although the app is available through Google Play or the Apple App Store, it must be accessed from an MDM-enrolled or managed device.
 
-Let us dig a little deeper into the implementation of CustomClient and CustomService. As mentioned earlier, CustomService exposes all the data through an API and is protected by Entra ID. In simple terms, CustomService has it’s own app registration, and each of the APIs exposed requires some kind of permission in the token, either through scp or role claim. These permissions are exposed through the "Expose an API" blade of the app registration.
+Let us dig a little deeper into the implementation of **CustomClient** and **CustomService**. As mentioned earlier, **CustomService** exposes all the data through an API and is protected by Entra ID. In simple terms, **CustomService** has it’s own app registration, and each of the APIs exposed requires some kind of permission in the token, either through scp or role claim. These permissions are exposed through the "Expose an API" blade of the app registration.
 
-On the other hand, CustomClient has a separate app registration, and it has added the necessary permissions to invoke the CustomService through the "API Permissions" blade by adding and granting the permissions exposed by CustomService. From the code implementation perspective, during the sign-in activity of the CustomClient app, it also requests a token for CustomService to invoke the API and populate data.
+On the other hand, **CustomClient** has a separate app registration, and it has added the necessary permissions to invoke the **CustomService** through the "API Permissions" blade by adding and granting the permissions exposed by **CustomService**. From the code implementation perspective, during the sign-in activity of the **CustomClient** app, it also requests a token for **CustomService** to invoke the API and populate data.
 
-Now, comparing this requirement to the Example Scenario 1 with Outlook Client, the trivial solution here is to apply the CA policy to CustomService while defining the CA policy(Target resource here is CustomService). This ensures that sign-in fails in the CustomClient app if it is accessed from a non-compliant device, since the CustomClient app requests a token for CustomService during the sign-in flow, which enforces the Conditional Access Policy to be applied on the app.
+Now, comparing this requirement to the Example Scenario 1 with Outlook Client, the trivial solution here is to apply the CA policy to **CustomService** while defining the CA policy(Target resource here is **CustomService**). This ensures that sign-in fails in the **CustomClient** app if it is accessed from a non-compliant device, since the **CustomClient** app requests a token for **CustomService** during the sign-in flow, which enforces the Conditional Access Policy to be applied on the app.
 
-## Example Scenario 3: Blocking Sign-In for CustomClient App Without CustomService
+## Example Scenario 3: Blocking Sign-In for **CustomClient** App Without **CustomService**
 
-This scenario is a variation of Example Scenario 2, where the CustomClient app does not have a dependency on CustomService, or CustomService isn’t protected by Entra ID. As you can imagine, you cannot define the Conditional Access Policy since the CustomClient app will not be available while defining the policy under the target resource, as it is a public client app registration. So, the question is, how do you enforce the Conditional Access Policy?
+This scenario is a variation of Example Scenario 2, where the **CustomClient** app does not have a dependency on **CustomService**, or **CustomService** isn’t protected by Entra ID. As you can imagine, you cannot define the Conditional Access Policy since the **CustomClient** app will not be available while defining the policy under the target resource, as it is a public client app registration. So, the question is, how do you enforce the Conditional Access Policy?
 
 A workaround here is to introduce a new dependency on a dummy service and configure the app to request a token for this service. Here’s how you can implement it:
 1.	Create API App Registration: Register a dummy API in Entra AD and expose a scope. This dummy service will act as the target resource for the Conditional Access Policy.
-2.	Add/Grant Permissions: In the CustomClient app registration, add permissions to the exposed scope of the dummy API. Even though there is no actual API implementation
+2.	Add/Grant Permissions: In the **CustomClient** app registration, add permissions to the exposed scope of the dummy API. Even though there is no actual API implementation
 
-From code perspective, the CustomClient app will request a token for this dummy service during the sign-in, which ensures that the Conditional Access Policy is evaluated against the target resource CustomService and hence policy will be enforced. This approach leverages the underlying requirement of Conditional Access Policies to be tied to a resource, thereby indirectly protecting the CustomClient app.
+From code perspective, the **CustomClient** app will request a token for this dummy service during the sign-in, which ensures that the Conditional Access Policy is evaluated against the target resource **CustomService** and hence policy will be enforced. This approach leverages the underlying requirement of Conditional Access Policies to be tied to a resource, thereby indirectly protecting the **CustomClient** app.
+
 
 ## Anti-pattern Alert: Conditional Access Policies in case of All Cloud Apps
 
