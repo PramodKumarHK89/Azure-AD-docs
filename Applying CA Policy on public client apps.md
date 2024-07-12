@@ -43,7 +43,11 @@ On the other hand, **CustomClient** has a separate app registration, and it has 
 
 Now, comparing this requirement to the Example Scenario 1 with Outlook Client, the trivial solution here is to apply the CA policy to **CustomService** while defining the CA policy(Target resource here is **CustomService**). This ensures that sign-in fails in the **CustomClient** app if it is accessed from a non-compliant device, since the **CustomClient** app requests a token for **CustomService** during the sign-in flow, which enforces the Conditional Access Policy to be applied on the app.
 
-## Example Scenario 3: Blocking Sign-In for **CustomClient** App Without **CustomService**
+On the contrary, let us assume an admin has applied a Conditional Access policy to the target resource **CustomService**, which is accessed by multiple client applications on web, desktop, and mobile platforms, including our example **CustomClient** app. By now, you would have guessed the behavior: the CA policy applies to all client apps requesting a token for CustomService.
+
+Now, let's consider a scenario where you would like to exclude the mobile app CustomClient from the Conditional Access policy. Can this be done? The answer is NO, since the mobile app will not be listed under the selected apps options in the CA policy definition.
+
+## Example Scenario 3: Blocking Sign-In for **CustomClient** App Without **CustomService** from Non-Compliant Devices
 
 This scenario is a variation of Example Scenario 2, where the **CustomClient** app does not have a dependency on **CustomService**, or **CustomService** isn’t protected by Entra ID. As you can imagine, you cannot define the Conditional Access Policy since the **CustomClient** app will not be available while defining the policy under the target resource, as it is a public client app registration. So, the question is, how do you enforce the Conditional Access Policy?
 
