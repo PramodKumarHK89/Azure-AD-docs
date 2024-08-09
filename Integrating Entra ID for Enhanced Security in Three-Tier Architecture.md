@@ -86,4 +86,7 @@ Similar to the APIM implementation.
 - Same as scenario 2 
 
 ## Conclusion
-In a complex multi-layer architecture, introducing app-only authorization (such as managed identity or client credential flow) while dropping the user context along the transactions may seem easier and more convenient, and it might also simplify the overall architecture. However, maintaining the user context throughout the transaction provides stronger security and granular level of authorization handling. By investing in separate app registrations and proper validation, you ensure compliance with the least privilege model and secure your application better. 
+In a complex multi-layer architecture, introducing app-only authorization (such as managed identity or client credential flow) while dropping the user context along the transactions may seem easier and more convenient, and it might also simplify the overall architecture. However, maintaining the user context throughout the transaction provides stronger security and granular level of authorization handling. By investing in separate app registrations and proper validation, you ensure compliance with the least privilege model and secure your application better.
+
+## Review Credit 
+- [Kyle Marsh](https://github.com/kylemar) 
