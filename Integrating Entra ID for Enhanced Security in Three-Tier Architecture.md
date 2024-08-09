@@ -17,6 +17,8 @@ Today, security is at the centre of everything. This article sheds light on the 
 
 ## Example Scenario 1: A typical client app, API service, and a database:
 
+![image](https://github.com/user-attachments/assets/744a3e56-a0db-48f6-9297-fc5d168c0b94)
+
 ### UI Layer (Client App):
 - Regardless of the platform type (web, mobile, or desktop), the app can use the MSAL library to authenticate the user by requesting an ID token to identify the user.
 - The prerequisite is that you need one app registration in Entra ID for the client app and must configure the redirect URI depending on the client app's platform type.
