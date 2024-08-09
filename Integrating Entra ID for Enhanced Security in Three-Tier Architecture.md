@@ -5,6 +5,7 @@ As we all know, three-tier architecture is a well-established design that organi
 - The UI Layer (Client App),
 - The API layer where data is processed, and
 - The data tier where application data is stored and managed (DB).
+
 Today, security is at the centre of everything. This article sheds light on the different approaches developers use to integrate the Entra ID Authentication & Authorization product into a three-tier architecture to secure the design, making it reliable and robust. The content presumes that all components are running on the Azure cloud and covers various three-tier architecture designs.
 ## Technical Components Involved:
 - Entra ID products
